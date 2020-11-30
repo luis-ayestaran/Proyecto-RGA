@@ -16,10 +16,23 @@ public class Grafo {
 	
 	public void init() {
 		
-		leeDatos();
+		///leeDatos();
 		//aleatoriamente();
-		//fijo();
+		fijo();
 		
+	}
+	
+	private void imprimir_matriz(int [][]costos ) {
+		//imprimir matriz de costos
+		
+				for (int x=0; x < costos.length; x++) {
+			    	System.out.print("\t");
+					  for (int y=0; y < costos[x].length; y++) {
+						    System.out.print(costos[x][y] + " \t ");
+						  }
+					  System.out.println(" ");
+						}
+				
 	}
 	
 	private void leeDatos() {
@@ -53,15 +66,7 @@ public class Grafo {
 		System.out.println("\n");
 		
 		sc.close();
-		//imprimir matriz de costos
-		
-		for (int x=0; x < costos.length; x++) {
-	    	System.out.print("\t");
-			  for (int y=0; y < costos[x].length; y++) {
-				    System.out.print(costos[x][y] + " \t ");
-				  }
-			  System.out.println(" ");
-				}
+		imprimir_matriz(costos);
 	      
 		
 	}
@@ -92,14 +97,7 @@ public class Grafo {
 					}		
 				sc.close();
 				//imprimir matriz de costos
-				
-				for (int x=0; x < costos.length; x++) {
-			    	System.out.print("\t");
-					  for (int y=0; y < costos[x].length; y++) {
-						    System.out.print(costos[x][y] + " \t ");
-						  }
-					  System.out.println(" ");
-						}
+				imprimir_matriz(costos);
 				
 	}
 	
@@ -118,13 +116,7 @@ public class Grafo {
     	
 	
     
-    for (int x=0; x < costos.length; x++) {
-    	System.out.print("\t");
-		  for (int y=0; y < costos[x].length; y++) {
-			    System.out.print(costos[x][y] + " \t ");
-			  }
-		  System.out.println(" ");
-			}
-      }
-
+    	imprimir_matriz(costos);
+    }
+ 
 }
