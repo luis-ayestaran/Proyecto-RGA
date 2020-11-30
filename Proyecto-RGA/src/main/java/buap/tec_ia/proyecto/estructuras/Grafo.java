@@ -1,8 +1,11 @@
 package buap.tec_ia.proyecto.estructuras;
 
+import java.util.Scanner;
+
 public class Grafo {
 	
 	private int[][] costos;
+	private int vertices;
 	
 	public Grafo() {
 		
@@ -10,22 +13,114 @@ public class Grafo {
 		
 	}
 	
+	
 	public void init() {
 		
-		leeDatos();
-		//aleatoriamente();
+		//leeDatos();
+		aleatoriamente();
 		//fijo();
-		
 		
 	}
 	
 	private void leeDatos() {
 		
-		//System.out.println("Propor");
-		//int vertices = //;
-		//costos = new int[vertices][vertices];
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Proporciona el numero de vertices:");
+	    vertices = sc.nextInt();
+	    costos = new int[vertices][vertices];
+		//se inicializa el vector de costos
+		for (int x=0; x < costos.length; x++) {
+			  for (int y=0; y < costos[x].length; y++) {
+				  costos[x][y] = -2;
+			  }
+			}
+		//llenado de la matriz de costos		
+		for (int x=0; x < costos.length; x++) {
+			  for (int y=0; y < costos[x].length; y++) {
+			  	  if((costos[x][y]==-2) && (x!=y)) {
+					  System.out.println("Proporciona el costo entre el vertice "+(x+1)+" y "+(y+1));
+					  //-1 si no existe camino
+					  costos[x][y] = sc.nextInt();
+					  costos[y][x] = costos[x][y];
+				  }
+			  	  else if(x==y) {
+			  		costos[x][y] = -1;
+			  	  }
+			  }
+			}
+		
+		sc.close();
+		//imprimir matriz de costos
+		
+		for (int x=0; x < costos.length; x++) {
+	    	System.out.print("\t");
+			  for (int y=0; y < costos[x].length; y++) {
+				    System.out.print(costos[x][y] + " \t ");
+				  }
+			  System.out.println(" ");
+				}
+	      
 		
 	}
 	
+	private void aleatoriamente() {
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Proporciona el numero de vertices:");
+		int vertices = sc.nextInt();
+		costos = new int[vertices][vertices];
+		//se inicializa el vector de costos
+				for (int x=0; x < costos.length; x++) {
+					  for (int y=0; y < costos[x].length; y++) {
+						  costos[x][y] = -2;
+					  }
+					}
+				//llenado de la matriz de costos
+				for (int x=0; x < costos.length; x++) {
+					  for (int y=0; y < costos[x].length; y++) {
+						  if((costos[x][y]==-2) && (x!=y)) {
+							  costos[x][y] = (int)(Math.random()*10+(-1));
+							  costos[y][x] = costos[x][y];
+						  }else if(x==y){
+							  costos[x][y] = -1;
+						  }
+					  }
+					}		
+				sc.close();
+				//imprimir matriz de costos
+				
+				for (int x=0; x < costos.length; x++) {
+			    	System.out.print("\t");
+					  for (int y=0; y < costos[x].length; y++) {
+						    System.out.print(costos[x][y] + " \t ");
+						  }
+					  System.out.println(" ");
+						}
+				
+	}
+	
+    private void fijo() {
+    	
+    	int[][] costos=
+    	{ //  1 2 3 4 5 6 7
+    		{-1,6,1,3,-1,-1,-1},
+    		{6,-1,-1,-1,-1,-1,4},
+    		{1,-1,-1,2,1,-1,2},
+    		{3,-1,2,-1,1,-1,-1},
+    		{-1,-1,1,1,-1,2,-1},
+    		{-1,-1,-1,-1,2,-1,2},
+    		{-1,4,2,-1,-1,2,-1},
+    	};
+    	
+	
+    
+    for (int x=0; x < costos.length; x++) {
+    	System.out.print("\t");
+		  for (int y=0; y < costos[x].length; y++) {
+			    System.out.print(costos[x][y] + " \t ");
+			  }
+		  System.out.println(" ");
+			}
+      }
 
 }

@@ -6,6 +6,8 @@ import buap.tec_ia.proyecto.estructuras.VectorRegulador;
 
 public class RGA {
 	
+	
+	
 	private VectorRegulador rv;
 	private VectorEstructural sv;
 	private VectorConexiones cv;
