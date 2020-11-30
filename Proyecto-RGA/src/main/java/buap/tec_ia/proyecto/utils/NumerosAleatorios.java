@@ -12,19 +12,19 @@ public class NumerosAleatorios {
 		int[] numerosAleatorios = new int[longitud];					//Se crea el vector de longitud length
 		
 		int valoresGenerados = 0;										//Inicializamos el contador de valores no repetidos generados
-		//int blankSpacePosition = generateRandomNumber(1, longitud + 1);	//Debido a que randomGenerator no obtiene 0, calculamos aleatoriamente la posicion donde lo insertaremos arbitratiamente
+		int blankSpacePosition = generaNumeroAleatorio(0, longitud);	//Debido a que randomGenerator no obtiene 0, calculamos aleatoriamente la posicion donde lo insertaremos arbitratiamente
 		while(valoresGenerados < longitud) {							//Mientras no se haya llenado el vector
 			
-			//if(valoresGenerados != blankSpacePosition) {				//Si el índice apunta a una posicion que no es donde insertaremos el 0 
-				int numeroAleatorio = generaNumeroAleatorio(1, longitud + 1);	//Generamos un numero aleatorio entre 1 y length - 1
+			if(valoresGenerados != blankSpacePosition) {				//Si el índice apunta a una posicion que no es donde insertaremos el 0 
+				int numeroAleatorio = generaNumeroAleatorio(0, longitud);	//Generamos un numero aleatorio entre 1 y length - 1
 				if( !numeroEstaRepetido(numerosAleatorios, numeroAleatorio) ) {	//Y si no esta repetido
 					numerosAleatorios[valoresGenerados] = numeroAleatorio;		//Lo guardamos en el vector
 					valoresGenerados++;
 				}
-			/*} else {													//Si el índice apunta a la posición donde insertaremos el 0
+			} else {													//Si el índice apunta a la posición donde insertaremos el 0
 				numerosAleatorios[valoresGenerados] = 0;						//Insertamos el 0 en el vector
 				valoresGenerados++;
-			}*/
+			}
 			
 		}
 		

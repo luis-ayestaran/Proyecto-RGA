@@ -5,19 +5,26 @@ public class Conexion {
 	private int idRg;
 	private int idSg;
 	
-	public int getidRg() {
+	public int getIdRg() {
 		return idRg;
 	}
-	public void setidRg(int idRg) {
+	public void setIdRg(int idRg) {
 		this.idRg = idRg;
 	}
-	public int getidSg() {
+	public int getIdSg() {
 		return idSg;
 	}
-	public void setidSg(int idSg) {
+	public void setIdSg(int idSg) {
 		this.idSg = idSg;
 	}
 	
+	public Conexion() {  }
 	
+	public Conexion( int idRg, int idSg ) {
+		
+		this.setIdRg(idRg);
+		this.setIdSg(idSg);
+		
+	}
 
 }

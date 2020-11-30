@@ -7,18 +7,32 @@ public class Grafo {
 	private int[][] costos;
 	private int vertices;
 	
-	public Grafo() {
-		
-		init();
-		
+	public int[][] getCostos() {
+		return costos;
+	}
+	public void setCostos(int[][] costos) {
+		this.costos = costos;
+	}
+	public int getVertices() {
+		return vertices;
+	}
+	public void setVertices(int vertices) {
+		this.vertices = vertices;
+	}
+
+	public Grafo() {}
+	
+	public Grafo( int vertices ) { 
+		this.vertices = vertices;
+		init( vertices );
 	}
 	
 	
-	public void init() {
+	public void init( int vertices ) {
 		
-		///leeDatos();
-		//aleatoriamente();
-		fijo();
+		///leeDatos( vertices );
+		aleatoriamente( vertices );
+		//fijo();
 		
 	}
 	
@@ -32,14 +46,14 @@ public class Grafo {
 						  }
 					  System.out.println(" ");
 						}
-				
+				System.out.println("\n");
 	}
 	
-	private void leeDatos() {
+	private void leeDatos( int vertices ) {
 		
 		Scanner sc = new Scanner(System.in);
-		System.out.print("Proporciona el numero de vertices: ");
-	    vertices = sc.nextInt();
+		//System.out.print("Proporciona el numero de vertices: ");
+	    //vertices = sc.nextInt();
 	    System.out.println("\n");
 	    costos = new int[vertices][vertices];
 		//se inicializa el vector de costos
@@ -71,11 +85,12 @@ public class Grafo {
 		
 	}
 	
-	private void aleatoriamente() {
+	private void aleatoriamente(int vertices) {
 		
+		System.out.println("Generando grafo de " + vertices + " vertices." );
 		Scanner sc = new Scanner(System.in);
-		System.out.print("Proporciona el numero de vertices:");
-		int vertices = sc.nextInt();
+		//System.out.print("Proporciona el numero de vertices:");
+		//int vertices = sc.nextInt();
 		System.out.println("\n");
 		costos = new int[vertices][vertices];
 		//se inicializa el vector de costos
