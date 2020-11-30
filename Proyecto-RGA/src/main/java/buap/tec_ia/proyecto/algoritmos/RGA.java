@@ -26,7 +26,7 @@ public class RGA {
 		crearPoblacionInicial(20);
 		//evaluarPoblacionInicial()
 		//while( !condicionParo() ) {
-		//	Todo el proceso del algoritmo genetico
+		//	funciones_geneticas();
 		//}
 		
 	}
