@@ -16,8 +16,8 @@ public class Grafo {
 	
 	public void init() {
 		
-		//leeDatos();
-		aleatoriamente();
+		leeDatos();
+		//aleatoriamente();
 		//fijo();
 		
 	}
@@ -25,8 +25,9 @@ public class Grafo {
 	private void leeDatos() {
 		
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Proporciona el numero de vertices:");
+		System.out.print("Proporciona el numero de vertices: ");
 	    vertices = sc.nextInt();
+	    System.out.println("\n");
 	    costos = new int[vertices][vertices];
 		//se inicializa el vector de costos
 		for (int x=0; x < costos.length; x++) {
@@ -38,7 +39,7 @@ public class Grafo {
 		for (int x=0; x < costos.length; x++) {
 			  for (int y=0; y < costos[x].length; y++) {
 			  	  if((costos[x][y]==-2) && (x!=y)) {
-					  System.out.println("Proporciona el costo entre el vertice "+(x+1)+" y "+(y+1));
+					  System.out.print("Proporciona el costo entre los vertices " + (x + 1) + " y " + (y + 1) + ": ");
 					  //-1 si no existe camino
 					  costos[x][y] = sc.nextInt();
 					  costos[y][x] = costos[x][y];
@@ -48,6 +49,8 @@ public class Grafo {
 			  	  }
 			  }
 			}
+		
+		System.out.println("\n");
 		
 		sc.close();
 		//imprimir matriz de costos
@@ -66,8 +69,9 @@ public class Grafo {
 	private void aleatoriamente() {
 		
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Proporciona el numero de vertices:");
+		System.out.print("Proporciona el numero de vertices:");
 		int vertices = sc.nextInt();
+		System.out.println("\n");
 		costos = new int[vertices][vertices];
 		//se inicializa el vector de costos
 				for (int x=0; x < costos.length; x++) {
