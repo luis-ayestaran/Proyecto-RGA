@@ -110,7 +110,7 @@ public class Grafo {
 				for (int x=0; x < costos.length; x++) {
 					  for (int y=0; y < costos[x].length; y++) {
 						  if((costos[x][y]==-2) && (x!=y)) {
-							  costos[x][y] = (int)(Math.random()*10+(-1));
+							  costos[x][y] = (int)(Math.random()*-1+(10));
 							  costos[y][x] = costos[x][y];
 						  }else if(x==y){
 							  costos[x][y] = -1;
