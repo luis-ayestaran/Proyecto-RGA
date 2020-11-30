@@ -28,5 +28,17 @@ public class RGA {
 	public void setCv(VectorConexiones cv) {
 		this.cv = cv;
 	}
+	
+	
+	public void inicializar() {
+		//crearGrafo();
+		//crearPoblacionInicial()
+		//evaluarPoblacionInicial()
+		//while( !condicionParo() ) {
+		//	Todo el proceso del algoritmo genetico
+		//}
+	}
+	
+	
 
 }
