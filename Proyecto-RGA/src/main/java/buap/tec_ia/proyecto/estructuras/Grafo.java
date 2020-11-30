@@ -7,6 +7,28 @@ public class Grafo {
 	private int[][] costos;
 	private int vertices;
 	
+	
+	
+	public int[][] getCostos() {
+		return costos;
+	}
+
+
+	public void setCostos(int[][] costos) {
+		this.costos = costos;
+	}
+
+
+	public int getVertices() {
+		return vertices;
+	}
+
+
+	public void setVertices(int vertices) {
+		this.vertices = vertices;
+	}
+
+
 	public Grafo() {
 		
 		init();
