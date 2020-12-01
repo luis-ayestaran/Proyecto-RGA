@@ -60,10 +60,10 @@ public class Individuo {
 		
 	}
 	
-	public Individuo( int[] recorrido ) {
+	public Individuo( int vertices ) {
 		
 		this.creaVectores();
-		this.setRecorrido(recorrido);
+		this.inicializarRecorrido(vertices);
 		this.inicializarVectorEstructural();
 		this.inicializarVectorRegulador();
 		this.inicializarVectorConexiones();
@@ -86,6 +86,12 @@ public class Individuo {
 		rv = new VectorRegulador();
 		sv = new VectorEstructural();
 		cv = new VectorConexiones();
+		
+	}
+	
+	private void inicializarRecorrido( int vertices ) {
+		
+		recorrido = NumerosAleatorios.generaAleatoriosNoRepetidos( vertices );
 		
 	}
 	
