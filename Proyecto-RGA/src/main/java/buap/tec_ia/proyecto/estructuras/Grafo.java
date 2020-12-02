@@ -88,7 +88,7 @@ public class Grafo {
 	private void aleatoriamente(int vertices) {
 		
 		System.out.println("Generando grafo de " + vertices + " vertices." );
-		Scanner sc = new Scanner(System.in);
+		//Scanner sc = new Scanner(System.in);
 		//System.out.print("Proporciona el numero de vertices:");
 		//int vertices = sc.nextInt();
 		System.out.println("\n");
@@ -110,7 +110,7 @@ public class Grafo {
 						  }
 					  }
 					}		
-				sc.close();
+				//sc.close();
 				//imprimir matriz de costos
 				imprimir_matriz(costos);
 				
