@@ -16,7 +16,6 @@ public class Fitness {
 	    int repetido=0;
 	    boolean camino=false;
 	    boolean band=false;
-	   
 	  //se valida que el vertice este dentro del rango
 		for(int i=0;i<individuo.getRecorrido().length;i++) {
 			System.out.print(individuo.getRecorrido()[i] +"\t"); //nodos que se visitaron del grafo
