@@ -8,7 +8,8 @@ import buap.tec_ia.proyecto.utils.NumerosAleatorios;
 public class Individuo {
 	
 	public static final int PROPORCION_REG_EST = 4;
-
+	
+	private int idIndividuo;
 	private float aptitud;
 	
 	private int[] recorrido;
@@ -20,6 +21,12 @@ public class Individuo {
 	
 	// -------------------------- GETTERS Y SETTERS ----------------------------//
 	
+	public int getIdIndividuo() {
+		return idIndividuo;
+	}
+	public void setIdIndividuo(int idIndividuo) {
+		this.idIndividuo = idIndividuo;
+	}
 	public float getAptitud() {
 		return aptitud;
 	}
@@ -60,8 +67,9 @@ public class Individuo {
 		
 	}
 	
-	public Individuo( int vertices ) {
+	public Individuo( int idIndividuo, int vertices ) {
 		
+		this.setIdIndividuo(idIndividuo);
 		this.creaVectores();
 		this.inicializarRecorrido(vertices);
 		this.inicializarVectorEstructural();
@@ -83,6 +91,7 @@ public class Individuo {
 	
 	private void creaVectores() {
 		
+		aptitud = 0;
 		rv = new VectorRegulador();
 		sv = new VectorEstructural();
 		cv = new VectorConexiones();
@@ -136,6 +145,8 @@ public class Individuo {
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append( "individuo@" + this.hashCode() + "{\n");
+		sb.append( "\tID - " + this.getIdIndividuo() + "\n");
+		sb.append( "\tAPTITUD - " + this.getAptitud() + "\n");
 		sb.append( "\tSV [ " );
 		for( GenEstructural sg : sv.getGenesEstructurales() ) {
 			sb.append( sg.getValor() );

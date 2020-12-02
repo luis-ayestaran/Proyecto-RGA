@@ -9,10 +9,11 @@ import buap.tec_ia.proyecto.utils.NumerosAleatorios;
 
 public class RGA {
 	
-	
 	RecorridosGrafos grafo;
 	private List<List<Individuo>> poblacion;
 	private Individuo mejorActual;
+	private static int contadorGeneracional = 0;
+	
 	
 	public RGA() {
 		
@@ -20,11 +21,12 @@ public class RGA {
 		
 	}
 	
+	
 	public void inicializar() {
 		
-		crearGrafo( 12 );
+		crearGrafo( 6 );
 		crearPoblacionInicial(60);
-		evaluarPoblacion();
+		//evaluarPoblacion();
 		//while( !condicionParo() ) {
 		//	funciones_geneticas();
 		//}
@@ -47,31 +49,19 @@ public class RGA {
 		
 		for( int i = 0; i < individuos; i++ ) {
 			
-			Individuo individuo = new Individuo( grafo.getGrafo().getVertices() );
+			Individuo individuo = new Individuo( i, grafo.getGrafo().getVertices() );
 			primeraGeneracion.add( individuo );
 			
 			System.out.println( individuo );
-			
-			
-			/*System.out.println("Individuo " + (i + 1) + ":");
-			for( int numero : recorrido ) {
-				System.out.print(numero + " ");
-			}
-			System.out.println("\n");
-				
-			int[] costoAristas = grafo.calcularCostoAristas( recorrido );
-			
-			System.out.println("Aristas: ");
-			for( int costo : costoAristas ) {
-				System.out.print(costo + " ");
-			}
-			System.out.println("\n-------------------------------\n");*/
 			
 		}
 		
 		poblacion.add( primeraGeneracion );
 		
+		contadorGeneracional++;
+		
 	}
+	
 	
 	private void evaluarPoblacion() {
 		
@@ -83,43 +73,52 @@ public class RGA {
 			
 		}
 		
+		
+		
 	}
 	
-	private boolean condicionParo(/* Individuo mejorNuevo */) {
+	
+	/*private boolean condicionParo( ) {
 		
 		boolean detener = false;
+		List<Individuo> ultimaGeneracion = poblacion.get( poblacion.size() - 1 );
+		
+		Individuo mejorNuevo = obtenerMejorIndividuo(  ); 
+		if(mejorNuevo != null) {
+			if( !mejoraRendimiento( mejorNuevo ) ) {
+				detener = true;
+			}
+		}
 		return detener;
 		
 	}
 	
-	/*private boolean generacionCambia() {
+	
+	private boolean nuevaGeneracionCambia( Individuo mejorNuevo ) {
 		
-		boolean cambio = true;
-		
-		
+		boolean cambia = false;
 		int[] mejorRecorridoActual = mejorActual.getRecorrido();
-		//int[] mejorRecorridoNuevo =  mejorNuevo.getRecorrido();
+		int[] mejorRecorridoNuevo =  mejorNuevo.getRecorrido();
 		
 		for( int i = 0; i < mejorActual.getRecorrido().length; i++ ) {
 			
-			if(  ) {
-				
-			}
-			
-			if(mejorRecorridoActual[i] != mejorRecorridoNuevo[i]) {
-				iguales = false;
+			if( mejorRecorridoActual[i] != mejorRecorridoNuevo[i] ) {
+				cambia = true;
 				break;
 			}
 			
 		}
 		
-		return cambio;
+		return cambia;
 		
 	}
 	
-	private boolean mejoraRendimiento(// Individuo mejorNuevo ) {
+	private boolean mejoraRendimiento( Individuo mejorNuevo ) {
 		
 		boolean mejoraAptitud = false;
+		if( mejorNuevo.getAptitud() > mejorActual.getAptitud() ) {
+			mejoraAptitud = true;
+		}
 		return mejoraAptitud;
 		
 	}*/
