@@ -26,10 +26,13 @@ public class RGA {
 		
 		crearGrafo( 6 );
 		crearPoblacionInicial(60);
-		//evaluarPoblacion();
-		//while( !condicionParo() ) {
-		//	funciones_geneticas();
-		//}
+		evaluarPoblacion();
+		while( !condicionParo() ) {
+		//	cruzar_individuos()
+		//Mutar()
+		//Evaluar nueva generacion
+		//Incrementar el contador generacional
+		}
 		
 	}
 	
@@ -52,8 +55,6 @@ public class RGA {
 			Individuo individuo = new Individuo( i, grafo.getGrafo().getVertices() );
 			primeraGeneracion.add( individuo );
 			
-			System.out.println( individuo );
-			
 		}
 		
 		poblacion.add( primeraGeneracion );
@@ -68,28 +69,39 @@ public class RGA {
 		List<Individuo> ultimaGeneracion = poblacion.get( poblacion.size() - 1 );
 		
 		for( Individuo individuo : ultimaGeneracion ) {
-			
-			//Fitness.evaluarIndividuo(individuo);
-			
+			Fitness.funcionFitness(individuo, grafo);
 		}
 		
+		Ordenamiento.ordenarPorAptitud(ultimaGeneracion);
 		
+		mejorActual = ultimaGeneracion.get(0);		//Se obtiene el mejor individuo actual que servirá para la condición de paro
 		
 	}
 	
 	
-	/*private boolean condicionParo( ) {
+	private boolean condicionParo( ) {
 		
 		boolean detener = false;
-		List<Individuo> ultimaGeneracion = poblacion.get( poblacion.size() - 1 );
 		
-		Individuo mejorNuevo = obtenerMejorIndividuo(  ); 
-		if(mejorNuevo != null) {
-			if( !mejoraRendimiento( mejorNuevo ) ) {
-				detener = true;
+		if( contadorGeneracional > 1 ) { 
+			List<Individuo> ultimaGeneracion = poblacion.get( poblacion.size() - 1 );
+			
+			Individuo mejorNuevo = obtenerMejorIndividuo( ultimaGeneracion ); 
+			if(mejorNuevo != null) {
+				if( !mejoraRendimiento( mejorNuevo ) ) {
+					detener = true;
+				}
 			}
 		}
+		
 		return detener;
+		
+	}
+	
+	
+	private Individuo obtenerMejorIndividuo( List<Individuo> ultimaGeneracion ) {
+		
+		return ultimaGeneracion.get(0);
 		
 	}
 	
@@ -121,6 +133,6 @@ public class RGA {
 		}
 		return mejoraAptitud;
 		
-	}*/
+	}
 	
 }

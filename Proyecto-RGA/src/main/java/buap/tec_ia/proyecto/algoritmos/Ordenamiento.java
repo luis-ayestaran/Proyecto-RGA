@@ -11,7 +11,7 @@ public class Ordenamiento {
 		
 		Collections.sort(
 			generacion,
-			(individuo1, individuo2) -> (int) (individuo2.getAptitud() - individuo1.getAptitud())
+			(individuo1, individuo2) -> String.valueOf(individuo2.getAptitud()).compareTo(String.valueOf(individuo1.getAptitud()))
 		);
 		
 	}
