@@ -81,10 +81,10 @@ public class Permutacion {
 		
 		
 		//ver cambios
-		//System.out.println("Ver Cambios\n");
-		//System.out.println("IdRg    vrg    IdSg    vsg\n");
+		/*System.out.println("Ver Cambios\n");
+		System.out.println("IdRg    vrg    IdSg    vsg\n");
 		
-		/*for(int i=0; i<individuo.getCv().getConexiones().size(); i++) {
+		for(int i=0; i<individuo.getCv().getConexiones().size(); i++) {
 			idrg=individuo.getCv().getConexiones().get(i).getIdRg();
 			if(individuo.getRv().getGenesReguladores().get(idrg).getValor()==1){
 				

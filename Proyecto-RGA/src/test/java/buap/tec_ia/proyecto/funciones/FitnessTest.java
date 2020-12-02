@@ -9,7 +9,7 @@ public class FitnessTest {
 	
 	@Test
     public void test() {
-    	Individuo individuo = new Individuo(0, 5);
+    	Individuo individuo = new Individuo(0, 0, 5);
     	RecorridosGrafos grafo = new RecorridosGrafos(5);
     	Fitness.funcionFitness(individuo,grafo);
     }
