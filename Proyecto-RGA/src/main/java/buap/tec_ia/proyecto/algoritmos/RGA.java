@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import buap.tec_ia.proyecto.estructuras.Individuo;
+import buap.tec_ia.proyecto.funciones.Cruzamiento;
 import buap.tec_ia.proyecto.funciones.Fitness;
-import buap.tec_ia.proyecto.utils.NumerosAleatorios;
+import buap.tec_ia.proyecto.funciones.Mutacion;
 
 public class RGA {
 	
@@ -24,14 +25,15 @@ public class RGA {
 	
 	public void inicializar() {
 		
-		crearGrafo( 6 );
+		crearGrafo( 30 );
 		crearPoblacionInicial(60);
 		evaluarPoblacion();
 		while( !condicionParo() ) {
-		//	cruzar_individuos()
-		//Mutar()
-		//Evaluar nueva generacion
-		//Incrementar el contador generacional
+			elegirMejorIndividuoActual();
+			cruzarIndividuos();
+			mutarIndividuos();
+			evaluarPoblacion();
+			
 		}
 		
 	}
@@ -52,7 +54,7 @@ public class RGA {
 		
 		for( int i = 0; i < individuos; i++ ) {
 			
-			Individuo individuo = new Individuo( i, grafo.getGrafo().getVertices() );
+			Individuo individuo = new Individuo( i, contadorGeneracional, grafo.getGrafo().getVertices() );
 			primeraGeneracion.add( individuo );
 			
 		}
@@ -74,7 +76,40 @@ public class RGA {
 		
 		Ordenamiento.ordenarPorAptitud(ultimaGeneracion);
 		
+	}
+	
+	private void elegirMejorIndividuoActual() {
+		
+		
+		List<Individuo> ultimaGeneracion = poblacion.get( poblacion.size() - 1 );
 		mejorActual = ultimaGeneracion.get(0);		//Se obtiene el mejor individuo actual que servirá para la condición de paro
+		
+	}
+	
+	
+	private void cruzarIndividuos() {
+		
+		List<Individuo> ultimaGeneracion = poblacion.get( poblacion.size() - 1 );
+		Individuo padre = ultimaGeneracion.get(0);
+		Individuo madre = ultimaGeneracion.get(1);
+		List<Individuo> nuevaGeneracion = Cruzamiento.cruzar( padre, madre, ultimaGeneracion.size() );
+		poblacion.add( nuevaGeneracion );
+		
+		contadorGeneracional++;
+		
+	}
+	
+	
+	private void mutarIndividuos() {
+		
+		List<Individuo> ultimaGeneracion = poblacion.get( poblacion.size() - 1 );
+		for( Individuo individuo : ultimaGeneracion ) {
+			
+			System.out.println(individuo);
+			Mutacion.funcionMutacion(individuo);
+			System.out.println(individuo);
+			
+		}
 		
 	}
 	

@@ -10,6 +10,7 @@ public class Individuo {
 	public static final int PROPORCION_REG_EST = 4;
 	
 	private int idIndividuo;
+	private int idGeneracion;
 	private float aptitud;
 	
 	private int[] recorrido;
@@ -26,6 +27,12 @@ public class Individuo {
 	}
 	public void setIdIndividuo(int idIndividuo) {
 		this.idIndividuo = idIndividuo;
+	}
+	public int getIdGeneracion() {
+		return idGeneracion;
+	}
+	public void setIdGeneracion(int idGeneracion) {
+		this.idGeneracion = idGeneracion;
 	}
 	public float getAptitud() {
 		return aptitud;
@@ -63,13 +70,14 @@ public class Individuo {
 	
 	public Individuo() { 
 		
-		this.creaVectores();
+		//this.creaVectores();
 		
 	}
 	
-	public Individuo( int idIndividuo, int vertices ) {
+	public Individuo( int idIndividuo, int idGeneracion, int vertices ) {
 		
 		this.setIdIndividuo(idIndividuo);
+		this.setIdGeneracion(idGeneracion);
 		this.creaVectores();
 		this.inicializarRecorrido(vertices);
 		this.inicializarVectorEstructural();
@@ -146,6 +154,7 @@ public class Individuo {
 		StringBuilder sb = new StringBuilder();
 		sb.append( "individuo@" + this.hashCode() + "{\n");
 		sb.append( "\tID - " + this.getIdIndividuo() + "\n");
+		sb.append( "\tGENERACION - " + this.getIdGeneracion() + "\n");
 		sb.append( "\tAPTITUD - " + this.getAptitud() + "\n");
 		sb.append( "\tSV [ " );
 		for( GenEstructural sg : sv.getGenesEstructurales() ) {
