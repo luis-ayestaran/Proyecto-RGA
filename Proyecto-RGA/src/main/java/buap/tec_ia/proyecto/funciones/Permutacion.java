@@ -84,26 +84,22 @@ public class Permutacion {
 		//System.out.println("Ver Cambios\n");
 		//System.out.println("IdRg    vrg    IdSg    vsg\n");
 		
-		for(int i=0; i<individuo.getCv().getConexiones().size(); i++) {
+		/*for(int i=0; i<individuo.getCv().getConexiones().size(); i++) {
 			idrg=individuo.getCv().getConexiones().get(i).getIdRg();
 			if(individuo.getRv().getGenesReguladores().get(idrg).getValor()==1){
 				
-				//System.out.print(individuo.getCv().getConexiones().get(i).getIdRg()+ "\t" );//id del gen regulador
+				System.out.print(individuo.getCv().getConexiones().get(i).getIdRg()+ "\t" );//id del gen regulador
 				idrg=individuo.getCv().getConexiones().get(i).getIdRg();
-				//System.out.print(individuo.getRv().getGenesReguladores().get(idrg).getValor()+"\t" );
+				System.out.print(individuo.getRv().getGenesReguladores().get(idrg).getValor()+"\t" );
 				
-				//System.out.print(individuo.getCv().getConexiones().get(i).getIdSg()+ "\t" );//id del gen estructural
+				System.out.print(individuo.getCv().getConexiones().get(i).getIdSg()+ "\t" );//id del gen estructural
 				idsg=individuo.getCv().getConexiones().get(i).getIdSg();
-				//System.out.print(individuo.getSv().getGenesEstructurales().get(idsg).getValor()+"\t" );
+				System.out.print(individuo.getSv().getGenesEstructurales().get(idsg).getValor()+"\t" );
 				
-				//System.out.println("\n");
+				System.out.println("\n");
 				
 			}
-		}
-	
-		
-		
-		
+		}*/
 	}
 
 }
