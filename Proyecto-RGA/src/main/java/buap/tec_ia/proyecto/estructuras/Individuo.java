@@ -128,7 +128,11 @@ public class Individuo {
 		
 		for( int i = 0; i < longitud; i++ ) {
 			
-			this.rv.getGenesReguladores().add( new GenRegulador( NumerosAleatorios.generaNumeroAleatorio(0, 2) ) );
+			if( NumerosAleatorios.generaNumeroAleatorio(0, 10) < 2 ) {
+				this.rv.getGenesReguladores().add( new GenRegulador( 0 ) );
+			} else {
+				this.rv.getGenesReguladores().add( new GenRegulador( 1 ) );
+			}
 			
 		}
 		
@@ -152,7 +156,12 @@ public class Individuo {
 	public String toString() {
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append( "individuo@" + this.hashCode() + "{\n");
+		sb.append( "Individuo@" + this.hashCode() + "{\n");
+		sb.append( "\tRecorrido [ " );
+		for( int vertice : recorrido ) {
+			sb.append( vertice + ", " );
+		}
+		sb.append("]\n");
 		sb.append( "\tID - " + this.getIdIndividuo() + "\n");
 		sb.append( "\tGENERACION - " + this.getIdGeneracion() + "\n");
 		sb.append( "\tAPTITUD - " + this.getAptitud() + "\n");

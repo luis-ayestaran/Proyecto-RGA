@@ -20,8 +20,8 @@ public class Mutacion {
 		System.out.println("");*/
 		
 		Random generadorRandom = new Random();//probalidad de 0.75
-		if(generadorRandom.nextInt(1000) < 75) {
-			posi= new Random().nextInt( individuo.getRv().getGenesReguladores().size() );
+		if(generadorRandom.nextInt(1000) < 100) {
+			posi = new Random().nextInt( individuo.getRv().getGenesReguladores().size() );
 			//System.out.println("Posicion a cambia: " +posi);
 			if(individuo.getRv().getGenesReguladores().get(posi).getValor()==1) {
 				individuo.getRv().getGenesReguladores().get(posi).setValor(0);
