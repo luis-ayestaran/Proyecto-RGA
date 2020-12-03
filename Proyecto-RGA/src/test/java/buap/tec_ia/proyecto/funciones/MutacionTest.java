@@ -2,12 +2,12 @@ package buap.tec_ia.proyecto.funciones;
 
 import org.junit.Test;
 
-import buap.tec_ia.proyecto.estructuras.Individuo;
+import buap.tec_ia.proyecto.estructuras.Sujeto;
 
 public class MutacionTest {
 	@Test
     public void test() {
-    	Individuo individuo = new Individuo(0, 0, 30);
-    	OperadoresGeneticos.funcionMutacion(individuo);
+    	Sujeto individuo = new Sujeto(0, 0, 30);
+    	OperadoresGeneticos.mutar(individuo);
     }
 }

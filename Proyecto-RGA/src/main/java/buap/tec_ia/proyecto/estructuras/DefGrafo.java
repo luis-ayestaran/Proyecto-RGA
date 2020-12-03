@@ -3,7 +3,7 @@ package buap.tec_ia.proyecto.estructuras;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Grafo {
+public class DefGrafo {
 	
 	private int[][] costos;
 	private int vertices;
@@ -21,9 +21,9 @@ public class Grafo {
 		this.vertices = vertices;
 	}
 
-	public Grafo() {}
+	public DefGrafo() {}
 	
-	public Grafo( int vertices ) { 
+	public DefGrafo( int vertices ) { 
 		this.vertices = vertices;
 		init( vertices );
 	}
@@ -31,54 +31,37 @@ public class Grafo {
 	
 	public void init( int vertices ) {
 		
-		///leeDatos( vertices );
-		aleatoriamente( vertices );
-		//fijo();
+		leeDatos( vertices );
+		//aleatoriamente( vertices );
 		
 	}
 	
 	private void imprimir_matriz(int [][]costos ) {
-		
 		System.out.println("GRAFO GENERADO" );
-
 		System.out.println("\n");
-		
-		for(int i = 0; i < costos.length; i++) {
-			System.out.print("\t" + i);
-		}
-		
-		System.out.println("\n");
-		
 		for (int x = 0; x < costos.length; x++) {
-	    	System.out.print(x + "  |\t");
+	    	System.out.print("\t");
 			  for (int y = 0; y < costos[x].length; y++) {
 				    System.out.print(costos[x][y] + "\t ");
 				  }
-			  System.out.println("|");
+			  System.out.println("");
 		}
-		
 		System.out.println("\n");
 	}
 	
 	private void leeDatos( int vertices ) {
 		
 		Scanner sc = new Scanner(System.in);
-		//System.out.print("Proporciona el numero de vertices: ");
-	    //vertices = sc.nextInt();
-	    System.out.println("\n");
 	    costos = new int[vertices][vertices];
-		//se inicializa el vector de costos
 		for (int x=0; x < costos.length; x++) {
 			  for (int y=0; y < costos[x].length; y++) {
 				  costos[x][y] = -2;
 			  }
-			}
-		//llenado de la matriz de costos		
+			}	
 		for (int x=0; x < costos.length; x++) {
 			  for (int y=0; y < costos[x].length; y++) {
 			  	  if((costos[x][y]==-2) && (x!=y)) {
 					  System.out.print("Proporciona el costo entre los vertices " + (x + 1) + " y " + (y + 1) + ": ");
-					  //-1 si no existe camino
 					  costos[x][y] = sc.nextInt();
 					  costos[y][x] = costos[x][y];
 				  }

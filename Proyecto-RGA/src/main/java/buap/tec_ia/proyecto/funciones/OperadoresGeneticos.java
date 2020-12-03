@@ -6,34 +6,109 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import buap.tec_ia.proyecto.daos.Conexion;
-import buap.tec_ia.proyecto.daos.GenEstructural;
-import buap.tec_ia.proyecto.daos.GenRegulador;
-import buap.tec_ia.proyecto.estructuras.Individuo;
-import buap.tec_ia.proyecto.estructuras.VectorConexiones;
-import buap.tec_ia.proyecto.estructuras.VectorEstructural;
-import buap.tec_ia.proyecto.estructuras.VectorRegulador;
+import buap.tec_ia.proyecto.daos.Co;
+import buap.tec_ia.proyecto.daos.SG;
+import buap.tec_ia.proyecto.daos.RG;
+import buap.tec_ia.proyecto.estructuras.DefGrafo;
+import buap.tec_ia.proyecto.estructuras.Sujeto;
+import buap.tec_ia.proyecto.estructuras.CV;
+import buap.tec_ia.proyecto.estructuras.SV;
+import buap.tec_ia.proyecto.estructuras.RV;
 
 public class OperadoresGeneticos {
 	
-	public static List<Individuo> funcionCruzamiento( int idGeneracion, Individuo padre, Individuo madre, int tamPoblacion) {
+	public static final double inf = Double.POSITIVE_INFINITY;
+	
+	public static void eval(Sujeto individuo, DefGrafo grafo) {
 		
-		List<Individuo> siguienteGeneracion = new ArrayList<Individuo>();
+		double costoTotal=0;
+	    int bandera=0;
+	    int valor;
+	    int repetido=0;
+	    boolean camino=false;
+	    boolean band=false;
+
+		for(int i=0;i<individuo.getRecorrido().length;i++) {
+			
+			if(individuo.getRecorrido()[i]<0 || individuo.getRecorrido()[i]>=individuo.getRecorrido().length) {
+				
+				individuo.setAptitud((float) (1.0/inf));
+				band=true;
+				break;
+				
+			}
+			
+		}
 		
+		valor=individuo.getRecorrido()[0];
+		do {
+			
+			for(int i=0; i<individuo.getRecorrido().length; i++) {
+				 
+				if(individuo.getRecorrido()[i]==valor) {
+					
+					repetido=repetido+1;
+					
+				}
+				
+			}
+			bandera=bandera+1;
+			valor=individuo.getRecorrido()[bandera];
+			if(repetido>=2) {
+				individuo.setAptitud((float) (1.0/inf));
+				band=true;
+				break;
+			}
+			repetido=0;
+		}while(bandera!=(individuo.getRecorrido().length-1));
+		
+		if(band==false){
+		int[] costoAristas = grafo.calcularCostoAristas(individuo.getRecorrido());
+		for(int i=0;i<costoAristas.length;i++) {
+			
+			if(costoAristas[i]!=-1) {
+				costoTotal=costoAristas[i]+costoTotal;
+				camino=false;
+			} else {
+				individuo.setAptitud((float) (1.0/inf));
+				camino=true;
+				break;
+			}
+
+		    
+		}
+		if(camino==false) {
+			individuo.setAptitud((float) (1.0/costoTotal));
+		  }
+		
+	   }
+
+     }
+
+	
+	public static void ordenar( List<Sujeto> generacion ) {
+		Collections.sort(
+			generacion,
+			(individuo1, individuo2) -> (int) (individuo2.getAptitud() * 10000 - individuo1.getAptitud() * 10000)
+		);
+	}
+	
+	public static List<Sujeto> cruzar( int idGeneracion, Sujeto padre, Sujeto madre, int tamPoblacion) {
+		List<Sujeto> siguienteGeneracion = new ArrayList<Sujeto>();
 		int contadorHijos = 0;
 		for( int i = 0; i < (tamPoblacion / 2) ; i++ ) {
 			
-			VectorRegulador cruzaRvHijo1 = crossover( padre, madre );
+			RV cruzaRvHijo1 = crossover( padre, madre );
 			
-			Individuo hijo1 = new Individuo();
+			Sujeto hijo1 = new Sujeto();
 			hijo1.setIdIndividuo( contadorHijos );
 			hijo1.setIdGeneracion(idGeneracion);
 			contadorHijos++;
 			hijo1.setRv( cruzaRvHijo1 );
 			
-			VectorRegulador cruzaRvHijo2 = crossover( padre, madre );
+			RV cruzaRvHijo2 = crossover( padre, madre );
 			
-			Individuo hijo2 = new Individuo();
+			Sujeto hijo2 = new Sujeto();
 			hijo2.setIdIndividuo( contadorHijos );
 			hijo2.setIdGeneracion(idGeneracion);
 			contadorHijos++;
@@ -48,20 +123,20 @@ public class OperadoresGeneticos {
 					
 				}
 				
-				VectorConexiones cvHijo1 = new VectorConexiones();
+				CV cvHijo1 = new CV();
 				for( int j = 0; j < padre.getCv().getConexiones().size(); j++ ) {
 					cvHijo1.getConexiones().add( 
-						new Conexion( 
+						new Co( 
 							padre.getCv().getConexiones().get(j).getIdRg(),
 							padre.getCv().getConexiones().get(j).getIdSg()
 						) 
 					);
 				}
 				
-				VectorEstructural svHijo1 = new VectorEstructural();
+				SV svHijo1 = new SV();
 				for( int j = 0; j < recorridoHijo1.length; j++ ) {
 					
-					svHijo1.getGenesEstructurales().add( new GenEstructural( recorridoHijo1[j] ) );
+					svHijo1.getGenesEstructurales().add( new SG( recorridoHijo1[j] ) );
 					
 				}
 				
@@ -77,20 +152,20 @@ public class OperadoresGeneticos {
 					
 				}
 				
-				VectorConexiones cvHijo2 = new VectorConexiones();
+				CV cvHijo2 = new CV();
 				for( int j = 0; j < madre.getCv().getConexiones().size(); j++ ) {
 					cvHijo2.getConexiones().add( 
-						new Conexion( 
+						new Co( 
 							madre.getCv().getConexiones().get(j).getIdRg(),
 							madre.getCv().getConexiones().get(j).getIdSg()
 						) 
 					);
 				}
 				
-				VectorEstructural svHijo2 = new VectorEstructural();
+				SV svHijo2 = new SV();
 				for( int j = 0; j < recorridoHijo2.length; j++ ) {
 					
-					svHijo2.getGenesEstructurales().add( new GenEstructural( recorridoHijo2[j] ) );
+					svHijo2.getGenesEstructurales().add( new SG( recorridoHijo2[j] ) );
 					
 				}
 				hijo2.setRecorrido( recorridoHijo2 );
@@ -106,20 +181,20 @@ public class OperadoresGeneticos {
 					
 				}
 				
-				VectorConexiones cvHijo1 = new VectorConexiones();
+				CV cvHijo1 = new CV();
 				for( int j = 0; j < madre.getCv().getConexiones().size(); j++ ) {
 					cvHijo1.getConexiones().add( 
-						new Conexion( 
+						new Co( 
 							madre.getCv().getConexiones().get(j).getIdRg(),
 							madre.getCv().getConexiones().get(j).getIdSg()
 						) 
 					);
 				}
 				
-				VectorEstructural svHijo1 = new VectorEstructural();
+				SV svHijo1 = new SV();
 				for( int j = 0; j < recorridoHijo1.length; j++ ) {
 					
-					svHijo1.getGenesEstructurales().add( new GenEstructural( recorridoHijo1[j] ) );
+					svHijo1.getGenesEstructurales().add( new SG( recorridoHijo1[j] ) );
 					
 				}
 				
@@ -135,20 +210,20 @@ public class OperadoresGeneticos {
 					
 				}
 				
-				VectorConexiones cvHijo2 = new VectorConexiones();
+				CV cvHijo2 = new CV();
 				for( int j = 0; j < padre.getCv().getConexiones().size(); j++ ) {
 					cvHijo2.getConexiones().add( 
-						new Conexion( 
+						new Co( 
 							padre.getCv().getConexiones().get(j).getIdRg(),
 							padre.getCv().getConexiones().get(j).getIdSg()
 						) 
 					);
 				}
 				
-				VectorEstructural svHijo2 = new VectorEstructural();
+				SV svHijo2 = new SV();
 				for( int j = 0; j < recorridoHijo2.length; j++ ) {
 					
-					svHijo2.getGenesEstructurales().add( new GenEstructural( recorridoHijo2[j] ) );
+					svHijo2.getGenesEstructurales().add( new SG( recorridoHijo2[j] ) );
 					
 				}
 				hijo2.setRecorrido( recorridoHijo2 );
@@ -167,7 +242,7 @@ public class OperadoresGeneticos {
 		
 	}
 	
-	private static VectorRegulador crossover( Individuo padre, Individuo madre ) {
+	private static RV crossover( Sujeto padre, Sujeto madre ) {
 		
 		int[] rvPadre = new int[ padre.getRv().getGenesReguladores().size() ];
 		int[] rvMadre = new int[ madre.getRv().getGenesReguladores().size() ];
@@ -182,17 +257,17 @@ public class OperadoresGeneticos {
 		int cromosomasPadre = new Random().nextInt( rvPadre.length );
 		int cromosomasMadre = rvMadre.length - cromosomasPadre;
 		
-		VectorRegulador rvCruzado = new VectorRegulador();
+		RV rvCruzado = new RV();
 		
 		for(int i = 0; i < cromosomasMadre; i++) {
 			
-			rvCruzado.getGenesReguladores().add( new GenRegulador( rvMadre[i] ) );
+			rvCruzado.getGenesReguladores().add( new RG( rvMadre[i] ) );
 			
 		}
 		
 		for(int i = cromosomasMadre; i < rvPadre.length; i++) {
 			
-			rvCruzado.getGenesReguladores().add( new GenRegulador( rvPadre[i] ) );
+			rvCruzado.getGenesReguladores().add( new RG( rvPadre[i] ) );
 			
 		}
 		
@@ -201,7 +276,7 @@ public class OperadoresGeneticos {
 	}
 	
 	
-	public static void funcionMutacion(Individuo individuo) {
+	public static void mutar(Sujeto individuo) {
 		
 		int posi;
 		
@@ -220,7 +295,7 @@ public class OperadoresGeneticos {
 	}
 	
 	
-	public static void funcionMezcla(Individuo individuo) {
+	public static void mezclar(Sujeto individuo) {
 		
 		int idrg, idsg;
 		int contador = 0;

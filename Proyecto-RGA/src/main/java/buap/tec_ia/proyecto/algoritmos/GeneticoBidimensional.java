@@ -4,196 +4,144 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import buap.tec_ia.proyecto.estructuras.Grafo;
-import buap.tec_ia.proyecto.estructuras.Individuo;
-import buap.tec_ia.proyecto.funciones.Fitness;
+import buap.tec_ia.proyecto.estructuras.DefGrafo;
+import buap.tec_ia.proyecto.estructuras.Sujeto;
 import buap.tec_ia.proyecto.funciones.OperadoresGeneticos;
+import buap.tec_ia.proyecto.utils.Aleatorio;
 
 public class GeneticoBidimensional {
 	
 	private static int contGen = 0;
+	private List<List<Sujeto>> pob;
+	private Sujeto mejAct;
+	DefGrafo grafo;
 	
-	private List<List<Individuo>> poblacion;
-	private Individuo mejorActual;
-	Grafo grafo;
 	
-	
-	public void crearGrafo( int vertices ) {
-		
-		grafo = new Grafo( vertices );
-		
+	public void iniGrafo( int nVertices ) {
+		grafo = new DefGrafo( nVertices );
 	}
 	
 	
-	public void crearPoblacionInicial( int individuos ) {
-		
-		poblacion = new ArrayList<List<Individuo>>();
-		
-		List<Individuo> primeraGeneracion = new ArrayList<Individuo>();
-		
-		for( int i = 0; i < individuos; i++ ) {
-			
-			Individuo individuo = new Individuo( i, contGen, grafo.getVertices() );
-			primeraGeneracion.add( individuo );
-			
+	public void iniPob( int sujetos ) {
+		pob = new ArrayList<List<Sujeto>>();
+		List<Sujeto> primGen = new ArrayList<Sujeto>();
+		for( int i = 0; i < sujetos; i++ ) {
+			Sujeto sujeto = new Sujeto( i, contGen, grafo.getVertices() );
+			primGen.add( sujeto );
 		}
-		
-		poblacion.add( primeraGeneracion );
-		
+		pob.add( primGen );
 		contGen++;
-		
 	}
 	
 	
-	private void evaluarPoblacion() {
-		
-		List<Individuo> ultimaGeneracion = poblacion.get( poblacion.size() - 1 );
-		
-		for( Individuo individuo : ultimaGeneracion ) {
-			Fitness.funcionFitness(individuo, grafo);
+	private void eval() {
+		List<Sujeto> nuevaGen = pob.get( pob.size() - 1 );
+		for( Sujeto sujeto : nuevaGen ) {
+			OperadoresGeneticos.eval(sujeto, grafo);
 		}
-		
-		Fitness.ordenarPorAptitud(ultimaGeneracion);
-		
-	}
-	
-	private void elegirMejorIndividuoActual() {
-		
-		
-		List<Individuo> ultimaGeneracion = poblacion.get( poblacion.size() - 1 );
-		mejorActual = ultimaGeneracion.get(0);
+		OperadoresGeneticos.ordenar(nuevaGen);
 		
 	}
 	
+	private void getMejSujAct() {
+		List<Sujeto> ultimaGeneracion = pob.get( pob.size() - 1 );
+		mejAct = ultimaGeneracion.get(0);
+	}
 	
-	private void cruzarIndividuos() {
-		
-		List<Individuo> ultimaGeneracion = poblacion.get( poblacion.size() - 1 );
-		Individuo padre = ultimaGeneracion.get(0);
-		Individuo madre = ultimaGeneracion.get(1);
-		List<Individuo> nuevaGeneracion = OperadoresGeneticos.funcionCruzamiento( contGen, padre, madre, ultimaGeneracion.size() );
-		poblacion.add( nuevaGeneracion );
-		
+	
+	private void cruzar() {
+		List<Sujeto> genActual = pob.get( pob.size() - 1 );
+		Sujeto padre = genActual.get(0);
+		Sujeto madre = genActual.get(1);
+		List<Sujeto> nuevaGen = OperadoresGeneticos.cruzar( contGen, padre, madre, genActual.size() );
+		pob.add( nuevaGen );
 		contGen++;
-		
 	}
 	
 	
-	private void mutarIndividuos() {
-		
-		List<Individuo> ultimaGeneracion = poblacion.get( poblacion.size() - 1 );
-		for( Individuo individuo : ultimaGeneracion ) {
-			
-			OperadoresGeneticos.funcionMutacion(individuo);
-			
+	private void mutar() {
+		List<Sujeto> genActual = pob.get( pob.size() - 1 );
+		for( Sujeto sujeto : genActual ) {
+			OperadoresGeneticos.mutar(sujeto);
 		}
-		
 	}
 	
 	
 	private void actualizarIndividuos() {
-		
-		List<Individuo> ultimaGeneracion = poblacion.get( poblacion.size() - 1 );
-		for( Individuo individuo : ultimaGeneracion ) {
-			
-			OperadoresGeneticos.funcionMezcla(individuo);
-			
+		List<Sujeto> genActual = pob.get( pob.size() - 1 );
+		for( Sujeto sujeto : genActual ) {
+			OperadoresGeneticos.mezclar(sujeto);
 		}
-		
 	}
 	
 	
-	private boolean condicionParo( ) {
-		
+	private boolean detener( ) {
 		boolean detener = false;
-		
 		if( contGen > 1 ) {
-			
-			
-			List<Individuo> ultimaGeneracion = poblacion.get( poblacion.size() - 1 );
-			
-			Individuo mejorNuevo = obtenerMejorIndividuo( ultimaGeneracion );
+			List<Sujeto> ultimaGeneracion = pob.get( pob.size() - 1 );
+			Sujeto mejorNuevo = obtenerMejorIndividuo( ultimaGeneracion );
 			if(mejorNuevo != null) {
-				System.out.println( "Mejor individuo actual: " + mejorNuevo );
-				if(contGen > 135) {
+				System.out.println( "Individuo más óptimo de la generación " + contGen + ": " + mejorNuevo );
+				if(contGen > 100) {
 					if( !mejoraRendimiento( mejorNuevo ) ) {
 						detener = true;
-						System.out.println( "\n\n***** SE DETIENE EL ALGORITMO *****\n" );
+						System.out.println( "\n\n----------\n SOLUCIÓN \n----------\n" );
 						System.out.println("Mejor resultado final:");
 						StringBuilder sb = new StringBuilder();
-						sb.append("Camino [ ");
+						sb.append("Camino: ");
 						for(int vertice : mejorNuevo.getRecorrido()) {
 							sb.append( vertice + ", ");
 						}
-						sb.append("]");
 						System.out.println(sb.toString());
 						System.out.println("Costo = " + (1 / mejorNuevo.getAptitud()));
+						System.out.println("Aptitud = " + (mejorNuevo.getAptitud() * 100) + "%");
 					}
 				}
 			} else {
-				System.out.println( "Mejor individuo actual: " + mejorActual );
+				System.out.println( "Mejor individuo : " + mejAct );
 			}
-			
 		}
-		
-		//System.out.println("Ha convergido " + detener);
-		
 		return detener;
 		
 	}
 	
 	
-	private Individuo obtenerMejorIndividuo( List<Individuo> ultimaGeneracion ) {
-		
+	private Sujeto obtenerMejorIndividuo( List<Sujeto> ultimaGeneracion ) {
 		return ultimaGeneracion.get(0);
-		
 	}
 	
 	
-	private boolean mejoraRendimiento( Individuo mejorNuevo ) {
-		
+	private boolean mejoraRendimiento( Sujeto mejorNuevo ) {
 		boolean mejoraAptitud = false;
-		if( mejorNuevo.getAptitud() > mejorActual.getAptitud() ) {
+		if( mejorNuevo.getAptitud() > mejAct.getAptitud() ) {
 			mejoraAptitud = true;
 		}
 		return mejoraAptitud;
-		
 	}
 	
 	public static void main( String[] args ) {
-		
 		GeneticoBidimensional rga = new GeneticoBidimensional();
-
 		Scanner scanner = new Scanner( System.in );
-		
-		System.out.println("\nPASO 0: Creamos el grafo. ---------------------------------------------------------------\n");
-		System.out.print("Número de vértices del grafo a generar: ");
+		System.out.println("\nALGORITMO GENETICO BIDIMENSIONAL");
+		System.out.println("Problema del algoritmo de expansión mínima");
+		System.out.print("\nNúmero de vértices del grafo a generar: ");
 		int vertices = scanner.nextInt();
 		System.out.println();
-		rga.crearGrafo( vertices );
-		System.out.println("\nPASO 1: Generamos la poblacion inicial de individuos. -----------------------------------\n");
-		System.out.print("Número de individuos de la primera generacion: ");
-		int poblacionInicial = scanner.nextInt();
-		System.out.println("NACE GENERACION " + contGen + ".\n\n");
-		rga.crearPoblacionInicial( poblacionInicial );
-		System.out.println("\nPASO 2: Evaluamos la poblacion para asignarle un valor de aptitud. ----------------------\n");
-		rga.evaluarPoblacion();
+		rga.iniGrafo( vertices );
+		int poblacionInicial = Aleatorio.generaNumeroAleatorio(0, 40);
+		System.out.println("\nNace generacion " + contGen + ": " + poblacionInicial + " individuos.");
+		rga.iniPob( poblacionInicial );
+		rga.eval();
+		System.out.println("Generacion " + contGen + " evaluada.\n\n");
 		scanner.close();
-		while( !rga.condicionParo() ) {
-			
-			rga.elegirMejorIndividuoActual();
-			System.out.println("\nPASO 3: Cruzamos a los dos padres más aptos. --------------------------------------------\n");
-			System.out.println("NACE GENERACION " + contGen + ".\n");
-			rga.cruzarIndividuos();
-			System.out.println("\nPASO 4: Aplicamos una mutacion con baja probabilidad. -----------------------------------\n");
-			rga.mutarIndividuos();
+		while( !rga.detener() ) {
+			rga.getMejSujAct();
+			rga.cruzar();
+			System.out.println("\nNace generacion " + contGen + ": " + poblacionInicial + " individuos.");
+			rga.mutar();
 			rga.actualizarIndividuos();
-			System.out.println("\nPASO 5: Evaluamos la nueva generación. --------------------------------------------------\n");
-			rga.evaluarPoblacion();
-			
+			rga.eval();
+			System.out.println("Generacion " + contGen + " evaluada.\n");
 		}
-		
-		
 	}
-	
 }

@@ -1,10 +1,10 @@
 package buap.tec_ia.proyecto.daos;
 
-public class GenRegulador {
+public class RG {
 	
 	private int valor;
 	
-	public GenRegulador( int valor ) {
+	public RG( int valor ) {
 		
 		this.setValor(valor);
 		

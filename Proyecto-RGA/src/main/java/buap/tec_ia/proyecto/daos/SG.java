@@ -1,10 +1,10 @@
 package buap.tec_ia.proyecto.daos;
 
-public class GenEstructural {
+public class SG {
 	
 	private int valor;
 	
-	public GenEstructural( int valor ) {
+	public SG( int valor ) {
 		
 		this.setValor(valor);
 		

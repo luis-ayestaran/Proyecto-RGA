@@ -1,6 +1,6 @@
 package buap.tec_ia.proyecto.daos;
 
-public class Conexion {
+public class Co {
 	
 	private int idRg;
 	private int idSg;
@@ -18,9 +18,9 @@ public class Conexion {
 		this.idSg = idSg;
 	}
 	
-	public Conexion() {  }
+	public Co() {  }
 	
-	public Conexion( int idRg, int idSg ) {
+	public Co( int idRg, int idSg ) {
 		
 		this.setIdRg(idRg);
 		this.setIdSg(idSg);
