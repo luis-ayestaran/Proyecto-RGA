@@ -156,36 +156,31 @@ public class Individuo {
 	public String toString() {
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append( "Individuo@" + this.hashCode() + "{\n");
-		sb.append( "\tRecorrido [ " );
-		for( int vertice : recorrido ) {
-			sb.append( vertice + ", " );
-		}
-		sb.append("]\n");
-		sb.append( "\tID - " + this.getIdIndividuo() + "\n");
-		sb.append( "\tGENERACION - " + this.getIdGeneracion() + "\n");
-		sb.append( "\tAPTITUD - " + this.getAptitud() + "\n");
-		sb.append( "\tSV [ " );
+		sb.append( "\n[ INDIVIDUO " + this.getIdIndividuo() + " ]\n");
+		sb.append( "SV [ " );
 		for( GenEstructural sg : sv.getGenesEstructurales() ) {
+			sb.append( "[sg: " );
 			sb.append( sg.getValor() );
-			sb.append( ", " );
+			sb.append( "], " );
 		}
 		sb.append( "]\n" );
-		sb.append( "\tRV [ " );
+		sb.append( "RV [ " );
 		for( GenRegulador rg : rv.getGenesReguladores() ) {
+			sb.append( "[rg: " );
 			sb.append( rg.getValor() );
-			sb.append( ", " );
+			sb.append( "], " );
 		}
 		sb.append( "]\n" );
-		sb.append( "\tCV [ " );
+		sb.append( "CV [ " );
 		for( Conexion co : cv.getConexiones() ) {
 			sb.append( "[" );
-			sb.append( "rg: " + co.getIdRg() );
+			sb.append( "idRg: " + co.getIdRg() );
 			sb.append( ", " );
-			sb.append( "sg: " + co.getIdSg() );
+			sb.append( "idSg: " + co.getIdSg() );
 			sb.append( "],   " );
 		}
-		sb.append( "]\n}\n" );
+		sb.append( "Generacion: " + this.getIdGeneracion() + "\n");
+		sb.append( "Aptitud: " + this.getAptitud() + "\n");
 		return sb.toString();
 		
 	}

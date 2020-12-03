@@ -1,6 +1,8 @@
 package buap.tec_ia.proyecto.funciones;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -12,9 +14,9 @@ import buap.tec_ia.proyecto.estructuras.VectorConexiones;
 import buap.tec_ia.proyecto.estructuras.VectorEstructural;
 import buap.tec_ia.proyecto.estructuras.VectorRegulador;
 
-public class Cruzamiento {
+public class OperadoresGeneticos {
 	
-	public static List<Individuo> cruzar( int idGeneracion, Individuo padre, Individuo madre, int tamPoblacion) {
+	public static List<Individuo> funcionCruzamiento( int idGeneracion, Individuo padre, Individuo madre, int tamPoblacion) {
 		
 		List<Individuo> siguienteGeneracion = new ArrayList<Individuo>();
 		
@@ -195,6 +197,77 @@ public class Cruzamiento {
 		}
 		
 		return rvCruzado;
+		
+	}
+	
+	
+	public static void funcionMutacion(Individuo individuo) {
+		
+		int posi;
+		
+		Random generadorRandom = new Random();
+		if(generadorRandom.nextInt(1000) < 250) {
+			
+			posi = new Random().nextInt( individuo.getRv().getGenesReguladores().size() );
+			if(individuo.getRv().getGenesReguladores().get(posi).getValor()==1) {
+				individuo.getRv().getGenesReguladores().get(posi).setValor(0);
+			}else {
+				individuo.getRv().getGenesReguladores().get(posi).setValor(1);
+			}
+			
+		}
+
+	}
+	
+	
+	public static void funcionMezcla(Individuo individuo) {
+		
+		int idrg, idsg;
+		int contador = 0;
+		
+		for(int i = 0; i < individuo.getCv().getConexiones().size(); i++) {
+			
+			idrg = individuo.getCv().getConexiones().get(i).getIdRg();
+			if( individuo.getRv().getGenesReguladores().get(idrg).getValor() == 1 ){
+				
+				idrg = individuo.getCv().getConexiones().get(i).getIdRg();
+				idsg=individuo.getCv().getConexiones().get(i).getIdSg();
+				contador = contador + 1;
+				
+			}
+			
+		}
+		
+		int[] idSg = new int[contador];
+		Integer[] vsg = new Integer[contador];
+		int p = 0;
+		
+		for(int i = 0; i < individuo.getCv().getConexiones().size(); i++) {
+			idrg = individuo.getCv().getConexiones().get(i).getIdRg();
+			if(individuo.getRv().getGenesReguladores().get(idrg).getValor() == 1){
+				idrg = individuo.getCv().getConexiones().get(i).getIdRg();
+				idsg = individuo.getCv().getConexiones().get(i).getIdSg();
+				idSg[p] = idsg;
+				vsg[p] = individuo.getSv().getGenesEstructurales().get(idsg).getValor();
+				p++;
+			}
+		}
+		
+		List<Integer> valoresSG = Arrays.asList( vsg );
+		Collections.shuffle(valoresSG);
+		valoresSG.toArray(vsg);
+		
+		for( int i = 0; i < idSg.length; i++ ) {
+			
+			individuo.getSv().getGenesEstructurales().get(idSg[i]).setValor(vsg[i]);
+			
+		}
+
+		for( int i = 0; i < individuo.getRecorrido().length; i++ ) {
+			
+			individuo.getRecorrido()[i] = individuo.getSv().getGenesEstructurales().get(i).getValor();
+			
+		}
 		
 	}
 	

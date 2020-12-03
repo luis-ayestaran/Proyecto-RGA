@@ -10,7 +10,7 @@ public class PermutacionTest {
     public void test() {
     	Individuo individuo = new Individuo(0, 0, 12);
     	//RecorridosGrafos grafo = new RecorridosGrafos(20);
-    	Permutacion.funcionPermutacion(individuo);
+    	OperadoresGeneticos.funcionMezcla(individuo);
     }
 
 }
